@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 
 from users.models import Profile
 from users.serializers import RegisterFormSerializer, UserSearchSerializer
+from friendrequests.serializers import FriendRequestSerializer
 
 #Sign up new user
 @api_view(['POST'])
@@ -22,7 +23,7 @@ def signup(request):
             new_user = User.objects.create_user(username, email, password)
             Token.objects.create(user=new_user)
             Profile.objects.create(user=new_user)
-            return Response(status=status.HTTP_201_CREATED)
+            return Response({"message": "user created"})
 
 #Search for a user
 @api_view(['GET'])
@@ -35,3 +36,12 @@ def user_search(request):
             return Response(serializer.data)
         else:
             return Response({"message": "user does not exist"})
+
+#User inbox
+@api_view(['GET'])
+def inbox(request):
+    if request.method == "GET":
+        profile = Profile.objects.get(user=request.user)
+        friend_requests = profile.friend_requests.all()
+        serializer = FriendRequestSerializer(friend_requests, many=True)
+        return Response(serializer.data)
