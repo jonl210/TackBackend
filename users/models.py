@@ -7,3 +7,4 @@ from friendrequests.models import FriendRequest
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     friend_requests = models.ManyToManyField(FriendRequest)
+    friends = models.ManyToManyField("self")

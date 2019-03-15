@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 
 from users.models import Profile
 from users.serializers import RegisterFormSerializer, UserSerializer
+from friendrequests.models import FriendRequest
 
 #Sign up new user
 @api_view(['POST'])
