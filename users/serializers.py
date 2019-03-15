@@ -8,7 +8,7 @@ class RegisterFormSerializer(serializers.Serializer):
     password = serializers.CharField(min_length=6)
 
 #Serialize data to return user searched for
-class UserSearchSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name',)

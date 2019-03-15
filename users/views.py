@@ -7,8 +7,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
 from users.models import Profile
-from users.serializers import RegisterFormSerializer, UserSearchSerializer
-from friendrequests.serializers import FriendRequestSerializer
+from users.serializers import RegisterFormSerializer, UserSerializer
 
 #Sign up new user
 @api_view(['POST'])
@@ -32,7 +31,7 @@ def user_search(request):
         query = request.query_params["searchquery"]
         if User.objects.filter(username=query).exists():
             user_search_result = User.objects.get(username=query)
-            serializer = UserSearchSerializer(user_search_result)
+            serializer = UserSerializer(user_search_result)
             return Response(serializer.data)
         else:
             return Response({"message": "user does not exist"})
@@ -41,7 +40,13 @@ def user_search(request):
 @api_view(['GET'])
 def inbox(request):
     if request.method == "GET":
+        user_requests = []
         profile = Profile.objects.get(user=request.user)
         friend_requests = profile.friend_requests.all()
-        serializer = FriendRequestSerializer(friend_requests, many=True)
+
+        #Get from_user from each request to serialize
+        for request in friend_requests:
+            user_requests.append(request.from_user.user)
+
+        serializer = UserSerializer(user_requests, many=True)
         return Response(serializer.data)
