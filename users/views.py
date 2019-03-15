@@ -31,8 +31,18 @@ def user_search(request):
     if request.method == "GET":
         query = request.query_params["searchquery"]
         if User.objects.filter(username=query).exists():
-            user_search_result = User.objects.get(username=query)
-            serializer = UserSerializer(user_search_result)
+            user_search_profile = Profile.objects.get(user=User.objects.get(username=query))
+            profile = Profile.objects.get(user=request.user)
+            serializer = UserSerializer(user_search_profile.user)
+
+            #Check if friend request exists or if already friends of if same user
+            if FriendRequest.objects.filter(from_user=profile,to_user=user_search_profile).exists():
+                return Response({"user": serializer.data,"message": "request pending"})
+            elif profile.friends.all().filter(user=user_search_profile.user).exists():
+                return Response({"user": serializer.data, "message": "already friends"})
+            elif profile == user_search_profile:
+                return Response({"user": serializer.data, "message": "you"})
+
             return Response(serializer.data)
         else:
             return Response({"message": "user does not exist"})
