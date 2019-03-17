@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'users.apps.UsersConfig',
     'friendrequests.apps.FriendrequestsConfig',
+    'groups.apps.GroupsConfig',
 ]
 
 MIDDLEWARE = [
