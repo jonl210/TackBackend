@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from users.models import Profile
 from users.serializers import RegisterFormSerializer, UserSerializer
 from friendrequests.models import FriendRequest
+from groups.models import Group
+from groups.serializers import TableGroupSerializer
 
 #Sign up new user
 @api_view(['POST'])
@@ -61,3 +63,15 @@ def inbox(request):
 
         serializer = UserSerializer(user_requests, many=True)
         return Response(serializer.data)
+
+#Get all users groups
+@api_view(['GET'])
+def groups(request):
+    if request.method == "GET":
+        profile = Profile.objects.get(user=request.user)
+        created_groups = profile.groups.all()
+        joined_groups = profile.joined_groups.all()
+        created_group_serializer = TableGroupSerializer(created_groups, many=True)
+        joined_group_serializer = TableGroupSerializer(joined_groups, many=True)
+        return Response({"created_groups": created_group_serializer.data,
+                         "joined_groups": joined_group_serializer.data})

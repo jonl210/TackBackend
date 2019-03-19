@@ -9,4 +9,5 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     friend_requests = models.ManyToManyField(FriendRequest)
     friends = models.ManyToManyField("self")
-    groups = models.ManyToManyField(Group)
+    groups = models.ManyToManyField(Group, related_name="my_groups")
+    joined_groups = models.ManyToManyField(Group, related_name="joined_groups")
