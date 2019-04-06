@@ -65,12 +65,9 @@ def inbox(request):
 
 #Get users's created and joined groups
 @api_view(['GET'])
-def groups(request):
+def created_groups(request):
     if request.method == "GET":
         profile = Profile.objects.get(user=request.user)
         created_groups = profile.groups.all()
-        joined_groups = profile.joined_groups.all()
         created_group_serializer = TableGroupSerializer(created_groups, many=True)
-        joined_group_serializer = TableGroupSerializer(joined_groups, many=True)
-        return Response({"created_groups": created_group_serializer.data,
-                         "joined_groups": joined_group_serializer.data})
+        return Response({"created_groups": created_group_serializer.data})
