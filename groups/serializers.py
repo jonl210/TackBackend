@@ -12,4 +12,4 @@ class TableGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ('name', 'date', 'creator')
+        fields = ('name', 'date', 'creator', 'u_id',)

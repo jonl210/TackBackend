@@ -63,11 +63,11 @@ def inbox(request):
         serializer = UserSerializer(user_requests, many=True)
         return Response(serializer.data)
 
-#Get users's created and joined groups
+#Get users's created groups
 @api_view(['GET'])
 def created_groups(request):
     if request.method == "GET":
         profile = Profile.objects.get(user=request.user)
         created_groups = profile.groups.all()
         created_group_serializer = TableGroupSerializer(created_groups, many=True)
-        return Response({"created_groups": created_group_serializer.data})
+        return Response(created_group_serializer.data)
