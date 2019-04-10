@@ -9,7 +9,7 @@ from users.models import Profile
 from users.serializers import RegisterFormSerializer, UserSerializer
 from friendrequests.models import FriendRequest
 from groups.models import Group
-from groups.serializers import TableGroupSerializer
+from groups.serializers import GroupSerializer
 
 #Sign up new user
 @api_view(['POST'])
@@ -69,5 +69,5 @@ def created_groups(request):
     if request.method == "GET":
         profile = Profile.objects.get(user=request.user)
         created_groups = profile.groups.all()
-        created_group_serializer = TableGroupSerializer(created_groups, many=True)
+        created_group_serializer = GroupSerializer(created_groups, many=True)
         return Response(created_group_serializer.data)
