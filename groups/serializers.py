@@ -8,6 +8,7 @@ class CreatorField(serializers.Field):
     def to_representation(self, value):
         return value.user.username
 
+#Format group date
 class DateField(serializers.Field):
     def to_representation(self, value):
         return value.strftime("%b %-d %Y")
