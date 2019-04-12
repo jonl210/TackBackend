@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
 from users.models import Profile
-from users.serializers import RegisterFormSerializer, UserSerializer
+from users.serializers import RegisterFormSerializer, ProfileSerializer
 from friendrequests.models import FriendRequest
 from groups.models import Group
 from groups.serializers import GroupSerializer
@@ -26,29 +26,46 @@ def signup(request):
             Profile.objects.create(user=new_user)
             return Response({"message": "user created"})
 
+#Return user's profile
+@api_view(['GET'])
+def profile(request):
+    if request.method == "GET":
+        profile = Profile.objects.get(user=request.user)
+        profile_serializer = ProfileSerializer(profile)
+        return Response(profile_serializer.data)
+
+#Return user's friends
+@api_view(['GET'])
+def friends(request):
+    if request.method == "GET":
+        profile = Profile.objects.get(user=request.user)
+        friends = profile.friends.all()
+        serializer = ProfileSerializer(friends, many=True)
+        return Response(serializer.data)
+
 #Search for a user
 @api_view(['GET'])
 def user_search(request):
     if request.method == "GET":
-        query = request.query_params["searchquery"]
+        query = request.query_params["search_query"]
         if User.objects.filter(username=query).exists():
             user_search_profile = Profile.objects.get(user=User.objects.get(username=query))
             profile = Profile.objects.get(user=request.user)
-            serializer = UserSerializer(user_search_profile.user)
+            serializer = ProfileSerializer(user_search_profile)
 
             #Check if friend request exists or if already friends of if same user
             if FriendRequest.objects.filter(from_user=profile,to_user=user_search_profile).exists():
-                return Response({"user": serializer.data,"message": "request pending"})
+                return Response({"data": serializer.data, "message": "request pending"})
             elif profile.friends.all().filter(user=user_search_profile.user).exists():
-                return Response({"user": serializer.data, "message": "already friends"})
+                return Response({"data": serializer.data, "message": "already friends"})
             elif profile == user_search_profile:
-                return Response({"user": serializer.data, "message": "you"})
+                return Response({"data": serializer.data, "message": "you"})
 
             return Response(serializer.data)
         else:
             return Response({"message": "user does not exist"})
 
-#User inbox
+#Return user's friend requests
 @api_view(['GET'])
 def inbox(request):
     if request.method == "GET":
@@ -58,9 +75,9 @@ def inbox(request):
 
         #Get from_user from each request to serialize
         for request in friend_requests:
-            user_requests.append(request.from_user.user)
+            user_requests.append(request.from_user)
 
-        serializer = UserSerializer(user_requests, many=True)
+        serializer = ProfileSerializer(user_requests, many=True)
         return Response(serializer.data)
 
 #Get users's created groups
