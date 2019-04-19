@@ -11,7 +11,7 @@ class CreatorField(serializers.Field):
 #Format group date
 class DateField(serializers.Field):
     def to_representation(self, value):
-        return value.strftime("%b %-d %Y")
+        return value.strftime("%b %-d, %Y")
 
 #Serialize group to display in table
 class GroupSerializer(serializers.ModelSerializer):

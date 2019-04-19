@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
 from users.models import Profile
-from users.serializers import RegisterFormSerializer, ProfileSerializer
+from users.serializers import RegisterFormSerializer, ProfileSerializer, ProfileTabSerializer
 from friendrequests.models import FriendRequest
 from groups.models import Group
 from groups.serializers import GroupSerializer
@@ -31,7 +31,7 @@ def signup(request):
 def profile(request):
     if request.method == "GET":
         profile = Profile.objects.get(user=request.user)
-        profile_serializer = ProfileSerializer(profile)
+        profile_serializer = ProfileTabSerializer(profile)
         return Response(profile_serializer.data)
 
 #Return user's friends
@@ -61,7 +61,7 @@ def user_search(request):
             elif profile == user_search_profile:
                 return Response({"data": serializer.data, "message": "you"})
 
-            return Response(serializer.data)
+            return Response({"data": serializer.data, "message": "can request"})
         else:
             return Response({"message": "user does not exist"})
 
