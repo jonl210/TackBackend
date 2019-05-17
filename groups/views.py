@@ -33,6 +33,17 @@ def add_to_group(request, u_id):
         group.members.add(friend_profile)
         return Response({"message": "friend added"})
 
+@api_view(['GET'])
+def remove_from_group(request, u_id):
+    if request.method == "GET":
+        username = request.query_params["name"]
+        friend_profile = Profile.objects.get(
+                         user=User.objects.get(username=username))
+        group = Group.objects.get(u_id=u_id)
+        friend_profile.joined_groups.remove(group)
+        group.members.remove(friend_profile)
+        return Response({"message": "friend removed"})
+
 #Return members in group
 @api_view(['GET'])
 def members(request, u_id):
@@ -54,13 +65,11 @@ def non_members(request, u_id):
         members = group.members.all()
 
         if members.count() != 0:
-            for friend in friends:
-                for member in members:
-                    if friend.user.username != member.user.username:
-                        non_members.append(friend)
-        else:
-            for friend in friends:
-                non_members.append(friend)
+            for member in members:
+                friends = friends.exclude(user=member.user)
+
+        for friend in friends:
+            non_members.append(friend)
 
         serializer = ProfileSerializer(non_members, many=True)
         return Response(serializer.data)
