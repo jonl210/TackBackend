@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 
 from users.models import Profile
+from users.serializers import ProfileSerializer
 from .models import Group
 
 import random, string
@@ -31,6 +32,38 @@ def add_to_group(request, u_id):
         friend_profile.joined_groups.add(group)
         group.members.add(friend_profile)
         return Response({"message": "friend added"})
+
+#Return members in group
+@api_view(['GET'])
+def members(request, u_id):
+    if request.method == "GET":
+        group = Group.objects.get(u_id=u_id)
+        members = group.members.all()
+        serializer = ProfileSerializer(members, many=True)
+        return Response(serializer.data)
+
+#Return friends not in group (specific to user making request)
+@api_view(['GET'])
+def non_members(request, u_id):
+    if request.method == "GET":
+        non_members = []
+
+        profile = Profile.objects.get(user=request.user)
+        group = Group.objects.get(u_id=u_id)
+        friends = profile.friends.exclude(user=group.creator.user)
+        members = group.members.all()
+
+        if members.count() != 0:
+            for friend in friends:
+                for member in members:
+                    if friend.user.username != member.user.username:
+                        non_members.append(friend)
+        else:
+            for friend in friends:
+                non_members.append(friend)
+
+        serializer = ProfileSerializer(non_members, many=True)
+        return Response(serializer.data)
 
 #Generate unique group id
 def generate_group_id():
