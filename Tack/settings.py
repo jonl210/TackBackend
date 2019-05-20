@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'friendrequests.apps.FriendrequestsConfig',
     'groups.apps.GroupsConfig',
+    'posts.apps.PostsConfig',
 ]
 
 MIDDLEWARE = [
