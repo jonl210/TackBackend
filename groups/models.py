@@ -8,3 +8,4 @@ class Group(models.Model):
     u_id = models.CharField(max_length=8, default=0)
     members = models.ManyToManyField('users.profile', related_name="member")
     date = models.DateTimeField(default=datetime.now)
+    posts = models.ManyToManyField('posts.post', related_name="group_posts")
