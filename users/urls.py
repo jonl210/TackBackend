@@ -4,6 +4,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('favorites', views.favorited_posts),
     path('friends', views.friends),
     path("profile", views.profile),
     path("groups/joined", views.joined_groups),

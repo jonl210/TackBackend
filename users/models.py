@@ -13,3 +13,4 @@ class Profile(models.Model):
     groups = models.ManyToManyField(Group, related_name="my_groups")
     joined_groups = models.ManyToManyField(Group, related_name="joined_groups")
     posts = models.ManyToManyField(Post, related_name="my_posts")
+    favorites = models.ManyToManyField(Post, related_name="favorited_posts")

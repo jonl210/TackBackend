@@ -1,11 +1,12 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from django.shortcuts import render
 from django.contrib.auth.models import User
 
 from users.models import Profile
 from users.serializers import ProfileSerializer
+from posts.serializers import PostSerializer
+from favorites.models import Favorite
 from .models import Group
 
 import random, string
@@ -33,6 +34,7 @@ def add_to_group(request, u_id):
         group.members.add(friend_profile)
         return Response({"message": "friend added"})
 
+#Remove friend from group
 @api_view(['GET'])
 def remove_from_group(request, u_id):
     if request.method == "GET":
@@ -73,6 +75,30 @@ def non_members(request, u_id):
 
         serializer = ProfileSerializer(non_members, many=True)
         return Response(serializer.data)
+
+#Retrieve all posts in a group
+@api_view(['GET'])
+def posts(request, u_id):
+    if request.method == "GET":
+        group = Group.objects.get(u_id=u_id)
+        posts = group.posts.all().order_by("-date")
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
+
+#Retrieve favorited posts by user in a group
+@api_view(['GET'])
+def favorited_posts(request, u_id):
+    favorited_posts = []
+    group = Group.objects.get(u_id=u_id)
+    posts = group.posts.all()
+    profile = Profile.objects.get(user=request.user)
+
+    for post in posts:
+        if Favorite.objects.filter(profile=profile, post=post).exists():
+            favorited_posts.append(post)
+
+    serializer = PostSerializer(favorited_posts, many=True)
+    return Response(serializer.data)
 
 #Generate unique group id
 def generate_group_id():

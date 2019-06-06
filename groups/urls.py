@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path("<u_id>/favorited_posts", views.favorited_posts),
+    path("<u_id>/posts", views.posts),
     path("<u_id>/non_members", views.non_members),
     path("<u_id>/members", views.members),
     path("<u_id>/remove", views.remove_from_group),

@@ -10,6 +10,7 @@ from users.serializers import RegisterFormSerializer, ProfileSerializer, Profile
 from friendrequests.models import FriendRequest
 from groups.models import Group
 from groups.serializers import GroupSerializer
+from posts.serializers import PostSerializer
 
 #Sign up new user
 @api_view(['POST'])
@@ -97,3 +98,12 @@ def joined_groups(request):
         joined_groups = profile.joined_groups.all()
         joined_groups_serializer = GroupSerializer(joined_groups, many=True)
         return Response(joined_groups_serializer.data)
+
+#Get posts user has favorited
+@api_view(['GET'])
+def favorited_posts(request):
+    if request.method == "GET":
+        profile = Profile.objects.get(user=request.user)
+        posts = profile.favorites.all()
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
