@@ -16,7 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from web import views as web_views
+
 urlpatterns = [
+    path('privacy', web_views.privacy, name='privacy'),
+    path('terms', web_views.terms, name='terms'),
+    path('', web_views.index, name='index'),
     path('posts/', include('posts.urls')),
     path('groups/', include('groups.urls')),
     path('requests/', include('friendrequests.urls')),

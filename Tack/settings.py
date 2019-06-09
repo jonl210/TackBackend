@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'groups.apps.GroupsConfig',
     'posts.apps.PostsConfig',
     'favorites.apps.FavoritesConfig',
+    'web.apps.WebConfig',
 ]
 
 MIDDLEWARE = [
