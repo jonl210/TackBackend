@@ -11,3 +11,7 @@ def terms(request):
 #Render privacy page
 def privacy(request):
     return render(request, "web/privacy.html")
+
+#Render about page
+def about(request):
+    return render(request, "web/about.html")

@@ -7,28 +7,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Tack - Easy group photo sharing</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'web/index_style.css' %}"/>
+    <title>Tack - About</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'web/terms_style.css' %}"/>
     <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-6">
-          <img id="iphonePortrait" src="{% static 'web/iphone_portrait.png' %}">
-        </div>
-        <div id="aboutColumn" class="col-4 text-center">
-          <h3 id="appName">tack</h3>
-          <h3 class="text">Easy group photo sharing.</h3>
-          <p class="paragraphtext">Share photos with groups you create and join, favorite the ones you love. Sound dope? Join Tack for free now!</p>
-          <!-- <img id="appStoreBadge" src="{% static 'web/app_store_badge.png' %}"> -->
-          <p class="paragraphtext">Tack is currently in beta and will be released soon.</p>
-          <ul class="list-inline">
-            <li class="paragraphtext list-inline-item"><a href="{% url 'about' %}">about</a></li>
-            <li class="paragraphtext list-inline-item"><a href="{% url 'terms' %}">terms</a></li>
-            <li class="paragraphtext list-inline-item"><a href="{% url 'privacy' %}">privacy</a></li>
-          </ul>
-        </div>
+    <div class="container text-center">
+      <div class="wrapper">
+        <h3 id="appName">tack</h3>
+        <h3 id="pageTitle">About</h3>
+        <p class="textStyle">Tack is all about creating groups and sharing photos in them.</p>
+        <p class="textStyle">When you create a group you can add as many friends to it as you like,</p>
+        <p class="textStyle">and share as many photos in it as you like. You can also favorite the</p>
+        <p class="textStyle">posts you love from each group and curate a list of the best moments from them.</p>
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
