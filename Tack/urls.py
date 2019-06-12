@@ -19,6 +19,7 @@ from django.urls import path, include
 from web import views as web_views
 
 urlpatterns = [
+    path('attribution', web_views.attribution, name='attribution'),
     path('about', web_views.about, name='about'),
     path('privacy', web_views.privacy, name='privacy'),
     path('terms', web_views.terms, name='terms'),

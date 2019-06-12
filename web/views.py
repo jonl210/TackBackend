@@ -15,3 +15,7 @@ def privacy(request):
 #Render about page
 def about(request):
     return render(request, "web/about.html")
+
+#Render attribution page
+def attribution(request):
+    return render(request, "web/attribution.html")
