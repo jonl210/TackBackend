@@ -1,0 +1,31 @@
+body {
+  background-color: #fa7357;
+}
+
+.wrapper {
+  margin-top: 75px;
+}
+
+#appName {
+  font-family: 'Lato', arial;
+  font-size: 50px;
+  font-weight: bold;
+  color: #fff;
+}
+
+#pageTitle {
+  font-family: 'Open Sans', arial;
+  font-size: 25px;
+  color: #fff;
+}
+
+#termsList {
+  list-style-position: inside;
+  margin-top: 20px;
+}
+
+.textStyle {
+  font-size: 20px;
+  font-family: 'Open Sans', arial;
+  color: #dcdcdc;
+}
