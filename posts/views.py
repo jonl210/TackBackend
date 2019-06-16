@@ -45,9 +45,13 @@ def favorite_post(request, u_id):
         profile = Profile.objects.get(user=request.user)
         post = Post.objects.get(u_id=u_id)
 
-        favorite = Favorite.objects.create(profile=profile, post=post)
-        post.favorites.add(favorite)
-        profile.favorites.add(post)
+        if Favorite.objects.filter(profile=profile, post=post).exists():
+            return Response({"message:": "post already favorited"})
+        else:
+            favorite = Favorite.objects.create(profile=profile, post=post)
+            post.favorites.add(favorite)
+            profile.favorites.add(post)
+
         return Response({"message": "post was favorited"})
 
 #Delete favorite and remove post from favorites

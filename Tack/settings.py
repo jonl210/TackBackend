@@ -25,7 +25,7 @@ SECRET_KEY = '^0hkiczcae9!4e%+xo44)pv$mu-fif^g3%@qc_m(bfio5$$(8#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['tack-site.jkqmesrznw.us-west-2.elasticbeanstalk.com', 'www.tackapp.co']
+ALLOWED_HOSTS = ['127.0.0.1', 'www.tackapp.co']
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = None
 
