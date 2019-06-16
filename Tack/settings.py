@@ -93,6 +93,7 @@ if 'RDS_HOSTNAME' in os.environ:
             'PASSWORD': os.environ['RDS_PASSWORD'],
             'HOST': os.environ['RDS_HOSTNAME'],
             'PORT': os.environ['RDS_PORT'],
+            'OPTIONS': {'charset': 'utf8mb4'},
         }
     }
 
@@ -106,6 +107,7 @@ else:
             'PASSWORD': 'dentyne40',
             'HOST': 'localhost',
             'PORT': '3306',
+            'OPTIONS': {'charset': 'utf8mb4'},
       }
 }
 
