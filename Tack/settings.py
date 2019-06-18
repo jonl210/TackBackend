@@ -96,6 +96,7 @@ if 'RDS_HOSTNAME' in os.environ:
             'OPTIONS': {
                 "init_command": "SET foreign_key_checks = 0;",
                 'charset': 'utf8mb4',
+                'connect_timeout': 10,
             },
         }
     }
@@ -113,6 +114,7 @@ else:
             'OPTIONS': {
                 "init_command": "SET foreign_key_checks = 0;",
                 'charset': 'utf8mb4',
+                'connect_timeout': 10,
             },
       }
 }
