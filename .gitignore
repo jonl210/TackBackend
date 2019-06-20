@@ -1,4 +1,6 @@
 creds.json
+/static/admin
+/static/rest_framework
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
