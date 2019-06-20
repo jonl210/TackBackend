@@ -22,6 +22,13 @@ def signup(request):
         if serializer.is_valid(raise_exception=True):
             username = serializer.validated_data["username"]
             email = serializer.validated_data["email"]
+
+            if User.objects.filter(username=username).exists():
+                return Response({"message": "username in use"})
+
+            if User.objects.filter(email=email).exists():
+                return Response({"message": "email in use"})
+
             password = serializer.validated_data["password"]
             new_user = User.objects.create_user(username, email, password)
             Token.objects.create(user=new_user)
