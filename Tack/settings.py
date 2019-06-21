@@ -23,7 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '^0hkiczcae9!4e%+xo44)pv$mu-fif^g3%@qc_m(bfio5$$(8#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+if 'RDS_HOSTNAME' in os.environ:
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'www.tackapp.co']
 
