@@ -23,6 +23,9 @@ def signup(request):
             username = serializer.validated_data["username"]
             email = serializer.validated_data["email"]
 
+            if ' ' in username:
+                return Response({"message": "space in username"})
+
             if User.objects.filter(username=username).exists():
                 return Response({"message": "username in use"})
 
