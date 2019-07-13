@@ -88,17 +88,16 @@ def posts(request, u_id):
 #Retrieve favorited posts by user in a group
 @api_view(['GET'])
 def favorited_posts(request, u_id):
-    favorited_posts = []
+    favorited_post_ids = []
     group = Group.objects.get(u_id=u_id)
     posts = group.posts.all()
     profile = Profile.objects.get(user=request.user)
 
     for post in posts:
         if Favorite.objects.filter(profile=profile, post=post).exists():
-            favorited_posts.append(post)
+            favorited_post_ids.append(post.u_id)
 
-    serializer = PostSerializer(favorited_posts, many=True)
-    return Response(serializer.data)
+    return Response(favorited_post_ids)
 
 #Generate unique group id
 def generate_group_id():
