@@ -50,7 +50,6 @@ def favorite_post(request, u_id):
         else:
             favorite = Favorite.objects.create(profile=profile, post=post)
             post.favorites.add(favorite)
-            profile.favorites.add(post)
 
         return Response({"message": "post was favorited"})
 
@@ -63,7 +62,6 @@ def unfavorite_post(request, u_id):
 
         favorite = Favorite.objects.get(profile=profile, post=post)
         post.favorites.remove(favorite)
-        profile.favorites.remove(post)
         favorite.delete()
         return Response({"message": "post unfavorited"})
 
